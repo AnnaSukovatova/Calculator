@@ -29,7 +29,7 @@ class Ui_MainWindow(object):
         font.setPointSize(26)
         self.clearButton.setFont(font)
         self.clearButton.setObjectName("clearButton")
-        self.arrowButton = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.press_button("<<"))
+        self.arrowButton = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.remove_button())
         self.arrowButton.setGeometry(QtCore.QRect(190, 110, 75, 75))
         font = QtGui.QFont()
         font.setPointSize(26)
@@ -113,7 +113,7 @@ class Ui_MainWindow(object):
         font.setPointSize(26)
         self.plusButton.setFont(font)
         self.plusButton.setObjectName("plusButton")
-        self.dotButton = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.press_button("."))
+        self.dotButton = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.press_dot())
         self.dotButton.setGeometry(QtCore.QRect(190, 470, 75, 75))
         font = QtGui.QFont()
         font.setPointSize(26)
@@ -125,7 +125,7 @@ class Ui_MainWindow(object):
         font.setPointSize(26)
         self.zeroButton.setFont(font)
         self.zeroButton.setObjectName("zeroButton")
-        self.signButton = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.press_button("+/-"))
+        self.signButton = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.plus_minus_button())
         self.signButton.setGeometry(QtCore.QRect(10, 470, 75, 75))
         font = QtGui.QFont()
         font.setPointSize(26)
@@ -150,6 +150,41 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
 
+    def plus_minus_button(self):
+        screen = self.output_label.text()
+        operators = ['*', '/', '+']
+        contains_any = any(item in screen for item in operators)
+        if contains_any:
+            pass
+        elif "-" in screen[1:]:
+            pass
+        else:
+            if screen[0] == "-":
+                screen = screen[1:]
+            else:
+                screen = "-" + screen
+        self.output_label.setText(screen)        
+
+
+    def remove_button(self):
+        screen = self.output_label.text()
+        screen = screen[:-1]
+        self.output_label.setText(screen)
+
+
+    def press_dot(self):
+        screen = self.output_label.text()
+        possible_chars_list = ['*', '/', '-', '+']
+        is_valid = True
+        for i in screen:
+            if i in possible_chars_list:
+                is_valid = True
+            elif i == ".":
+                is_valid = False
+        if is_valid:
+            self.output_label.setText(f'{screen}.')
+
+    
     def press_button(self, pressed):
         if pressed == "C":
             self.output_label.setText("0")
