@@ -131,7 +131,7 @@ class Ui_MainWindow(object):
         font.setPointSize(26)
         self.signButton.setFont(font)
         self.signButton.setObjectName("signButton")
-        self.equalButton = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.press_button("="))
+        self.equalButton = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.equal_button())
         self.equalButton.setGeometry(QtCore.QRect(275, 470, 75, 75))
         font = QtGui.QFont()
         font.setPointSize(26)
@@ -148,6 +148,13 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+
+    def equal_button(self):
+        screen = self.output_label.text()
+        result = eval(screen)
+        result = "{:.11g}".format(result) 
+        self.output_label.setText(result)
 
 
     def plus_minus_button(self):
