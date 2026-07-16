@@ -1,7 +1,8 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets   # Подключение  библиотеки PyQt5
 
-
+# Класс, представляющий собой окно с интерфейсом калькулятора
 class Ui_MainWindow(object):
+    # Формирование элементов: экран для значений и результата, а также кнопки    
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(361, 588)
@@ -149,14 +150,14 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-
+    # Обработчик кнопки =
     def equal_button(self):
         screen = self.output_label.text()
         result = eval(screen)
         result = "{:.11g}".format(result) 
         self.output_label.setText(result)
 
-
+    # Обработчик кнопки +/-
     def plus_minus_button(self):
         screen = self.output_label.text()
         operators = ['*', '/', '+']
@@ -172,13 +173,13 @@ class Ui_MainWindow(object):
                 screen = "-" + screen
         self.output_label.setText(screen)        
 
-
+    # Обработчик кнопки <<
     def remove_button(self):
         screen = self.output_label.text()
         screen = screen[:-1]
         self.output_label.setText(screen)
 
-
+    # Обработчик кнопки .
     def press_dot(self):
         screen = self.output_label.text()
         possible_chars_list = ['*', '/', '-', '+']
@@ -191,7 +192,7 @@ class Ui_MainWindow(object):
         if is_valid:
             self.output_label.setText(f'{screen}.')
 
-    
+    # Обработчик для кнопок с операциями, цифрами и кнопки С
     def press_button(self, pressed):
         if pressed == "C":
             self.output_label.setText("0")
@@ -226,7 +227,7 @@ class Ui_MainWindow(object):
         self.signButton.setText(_translate("MainWindow", "+/-"))
         self.equalButton.setText(_translate("MainWindow", "="))
 
-
+# Создание экземпляра класса MainWindow и запуск калькулятора
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
